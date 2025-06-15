@@ -1,10 +1,10 @@
-# terraform_policies.rego
 package terraform.policies
 
-# Require encryption for S3 buckets
+# Deny VPCs missing required tags
 deny[msg] {
     resource := input.resource_changes[_]
-    resource.type == "aws_s3_bucket"
-    not resource.change.after.server_side_encryption_configuration
-    msg := sprintf("S3 bucket '%s' must have server-side encryption enabled", [resource.address])
+    resource.type == "aws_vpc"
+    missing_tags := {"Name"} - {t | resource.change.after.tags[t]}
+    count(missing_tags) > 0
+    msg := sprintf("VPC '%s' is missing required tags: %v", [resource.address, missing_tags])
 }
