@@ -5,7 +5,3 @@ output "instance_id" {
 output "instance_arn" {
   value = aws_instance.focalboard_instance.arn
 }
-
-output "instance_type" {
-  value = aws_instance.focalboard_instance.instance_type
-}
