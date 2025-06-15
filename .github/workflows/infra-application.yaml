@@ -61,7 +61,7 @@ jobs:
           terraform_wrapper: false
 
       - name: Setup OPA
-        un: |
+        run: |
           curl -L -o opa https://openpolicyagent.org/downloads/v0.58.0/opa_linux_amd64
           chmod +x opa
           sudo mv opa /usr/local/bin/
