@@ -74,4 +74,4 @@ jobs:
 
       - name: Terraform Test
         id: test
-        run: terraform test -filter=instance_type_test.tftest.hcl
+        run: terraform test
