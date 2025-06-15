@@ -1,5 +1,5 @@
 variables {
-  instance_type = "t2.medium"  # Set the expected instance type
+  instance_type = "t2.micro"  # Set the expected instance type
   ami_id        = "ami-014e30c8a36252ae5"
 }
 
