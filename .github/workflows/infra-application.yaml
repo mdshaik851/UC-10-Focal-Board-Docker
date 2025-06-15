@@ -69,9 +69,9 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
+      - name: Terraform Plan
+        run: terraform plan
+
       - name: Terraform Test
         id: test
         run: terraform test -filter=instance_type_test.tftest.hcl
-
-      - name: Terraform Plan
-        run: terraform plan
