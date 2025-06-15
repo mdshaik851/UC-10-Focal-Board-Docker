@@ -60,6 +60,12 @@ jobs:
           terraform_version: ${{ vars.TF_VERSION }}
           terraform_wrapper: false
 
+      - name: Setup OPA
+        un: |
+          curl -L -o opa https://openpolicyagent.org/downloads/v0.58.0/opa_linux_amd64
+          chmod +x opa
+          sudo mv opa /usr/local/bin/
+
       - name: Terraform Init
         run: terraform init
 
@@ -70,7 +76,13 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan
+        run: |
+          terraform plan -out=tfplan.binary
+          terraform show -json tfplan.binary > ../tfplan.json
+
+      - name: Run OPA Validation
+        run: |
+          opa eval --format pretty --fail-defined --data terraform/terraform_policies.rego --input tfplan.json "data.terraform.policies"
 
       - name: Terraform Test
         id: test
