@@ -45,8 +45,4 @@ resource "aws_lb_target_group_attachment" "focalboard" {
   target_group_arn = aws_lb_target_group.focalboard_tg.arn
   target_id        = var.focal_instance_id
   port             = 8000
-  
-  tags = {
-    Name = "focalboard_tg_attachment"  # Corrected with quotes and underscores
-  }
 }
