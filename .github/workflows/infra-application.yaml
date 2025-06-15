@@ -37,6 +37,15 @@ jobs:
           tflint --init --config .tflint.hcl
           tflint
         continue-on-error: true
+      
+      - name: Install Checkov
+        run: |
+          pip3 install --upgrade pip
+          pip3 install checkov
+
+      - name: Run Checkov
+        run: checkov -d . --framework terraform --soft-fail
+        working-directory: ./
 
 
   terraform:
@@ -87,3 +96,12 @@ jobs:
       - name: Terraform Test
         id: test
         run: terraform test
+        continue-on-error: true
+
+      - name: Terraform Apply
+        if: ${{ github.event.inputs.action == 'apply' }}
+        run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        if: ${{ github.event.inputs.action == 'destroy' }}
+        run: terraform destroy -auto-approve

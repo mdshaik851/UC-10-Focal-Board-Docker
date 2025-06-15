@@ -6,9 +6,9 @@ provider "aws" {
 # VPC and Networking
 resource "aws_vpc" "demo-vpc-uc10" {
 cidr_block = var.vpc_cidr
-  # tags = {
-  #   Name = "demo-vpc-uc10"
-  # }
+  tags = {
+    Name = "demo-vpc-uc10"
+  }
 }
 
 #Creation Internet Gateway
