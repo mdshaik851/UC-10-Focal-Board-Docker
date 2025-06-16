@@ -2,7 +2,7 @@
 name: UC-10-Focal-Board-Using-Docker
 
 on:
-   pull_request:
+  pull_request:
     branches:
       - main
   push:
