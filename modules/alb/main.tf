@@ -5,7 +5,7 @@ resource "aws_lb" "focalboard_alb" {
   security_groups    = [var.security_groups_id_alb]
   subnets            = var.subnets
 
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 
   tags = {
     Name = "focalboard_alb"
