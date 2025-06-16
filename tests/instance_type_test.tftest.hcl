@@ -9,6 +9,6 @@ run "verify_instance_type" {
   # Assert that the instance type matches what we specified
   assert {
     condition     = module.focal_board_instance.instance_type_latest == var.instance_type
-    error_message = "Instance type mismatch. Expected ${var.instance_type}, got ${module.focal_board_instance.module.focal_board_instance.instance_type_latest}"
+    error_message = "Instance type mismatch"
   }
 }
