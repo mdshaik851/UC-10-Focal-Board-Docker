@@ -8,7 +8,7 @@ run "verify_instance_type" {
 
   # Assert that the instance type matches what we specified
   assert {
-    condition     = module.focal_board_instance.aws_instance.focalboard_instance.instance_type == var.instance_type
-    error_message = "Instance type mismatch. Expected ${var.instance_type}, got ${module.focal_board_instance.aws_instance.focalboard_instance.instance_type}"
+    condition     = module.instances.ec2_instance_tags == var.instance_type
+    error_message = "Instance type mismatch. Expected ${var.instance_type}, got ${module.instances.ec2_instance_tags}"
   }
 }
