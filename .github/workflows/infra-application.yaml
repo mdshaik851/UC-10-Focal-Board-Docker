@@ -128,8 +128,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
         run: |
-          git config --local user.email "devops979@gmail.com"
-          git config --local user.name "devops979"
+          git config --local user.email "md939255shaik@gmail.com"
+          git config --local user.name "mdshaik851"
           git fetch origin ${{ github.head_ref }}
           git checkout ${{ github.head_ref }}
           git remote set-url origin https://${{ github.actor }}:${GITHUBTOKEN}@github.com/${{ github.repository }}
