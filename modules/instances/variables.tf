@@ -9,7 +9,7 @@ variable "ami_id" {
 }
 
 variable "public_subnet_ids" {
-  
+  type = list(string)
 }
 
 variable "security_groups_id_ec2" {

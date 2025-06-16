@@ -107,81 +107,6 @@ jobs:
         run: terraform test
         continue-on-error: true
 
-      # - name: Terraform Plan (for PR comment)
-      #   id: plan
-      #   run: |
-      #     terraform plan -no-color > plan.txt 2> debug.log
-      #     cat plan.txt
-      #     echo "stdout<<EOF" >> $GITHUB_OUTPUT
-      #     cat plan.txt >> $GITHUB_OUTPUT
-      #     echo "EOF" >> $GITHUB_OUTPUT
-
-      # - name: Inject Terraform Plan into README.md
-      #   run: |
-      #     echo -e "\n## Terraform Plan Output\n" >> README.md
-      #     cat plan.txt >> README.md
-
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: '18'
-
-      # - name: Install terraform-docs
-      #   run: |
-      #     curl -sSLo terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
-      #     tar -xzf terraform-docs.tar.gz
-      #     sudo mv terraform-docs /usr/local/bin/
-
-      # - name: Generate-directory
-      #   if: github.event.pull_request.head.repo.full_name == github.repository
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
-      #   run: |
-      #     git config --local user.email "md939255shaik@gmail.com"
-      #     git config --local user.name "mdshaik851"
-      #     git fetch origin ${{ github.head_ref }}
-      #     git checkout ${{ github.head_ref }}
-      #     git remote set-url origin https://${{ github.actor }}:${GITHUBTOKEN}@github.com/${{ github.repository }}
-      #     terraform-docs markdown . > README.md.new
-      #     mv README.md.new README.md
-      #     if [ -f README.md ]; then
-      #       git add README.md
-      #       git diff --cached --quiet && echo "No changes to commit" || git commit -m "docs(terraform): Update README.md via terraform-docs"
-      #       git push origin HEAD:${{ github.head_ref }}
-      #     else
-      #       echo "README.md was not generated."
-      #     fi 
-      # - name: Update Pull Request with Terraform Plan
-      #   uses: actions/github-script@v7
-      #   env:
-      #     PLAN: "${{ steps.plan.outputs.stdout }}"
-      #   with:
-      #     github-token: ${{ secrets.GITHUBTOKEN }}
-      #     script: |
-      #       const plan = process.env.PLAN || "No plan output available.";
-      #       const output = [
-      #         "#### Terraform Format and Style ",
-      #         "#### Terraform Initialization ",
-      #         "#### Terraform Validation ",
-      #         "#### Terraform Plan 📄",
-      #         "",
-      #         "<details><summary>Show Plan</summary>",
-      #         "",
-      #         "```hcl",
-      #         plan,
-      #         "```",
-      #         "",
-      #         "</details>",
-      #         "",
-      #         `*Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`
-      #       ].join('\n');
-      #       github.rest.issues.createComment({
-      #         issue_number: context.issue.number,
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         body: output
-      #       });
-
       - name: Terraform Apply
         if: ${{ github.event.inputs.action == 'apply' }}
         run: terraform apply -auto-approve
@@ -189,8 +114,8 @@ jobs:
       - name: Terraform Destroy
         if: ${{ github.event.inputs.action == 'destroy' }}
         run: terraform destroy -auto-approve
-  docs:
-    name: Render Terraform Docs
+  terraform-docs:
+    name: Terraform Docs
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
 
